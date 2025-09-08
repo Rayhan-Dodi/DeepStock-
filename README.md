@@ -200,7 +200,3 @@ Developed by **Rayhan Kabir Dodi** for academic and research purposes.
 
 ```
 
----
-
-Do you want me to also add **example code snippets** (like normalization, SMA, EMA) directly inside the `README.md` so it’s more practical for GitHub readers?
-```
