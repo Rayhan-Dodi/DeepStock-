@@ -1,202 +1,163 @@
-```markdown
-# 📊 Deepstock
+# 🧠 DeepStock AI: Predicting Stock Prices with LSTM & ARIMA Baselines
 
-Deepstock-ML is a machine learning & AI pipeline for **stock market prediction (1990–2022 data)**.  
-It integrates technical indicators, preprocessing equations, and multiple AI/ML models including Neural Networks, LSTMs, Autoencoders, RBMs, ELM, and RBF networks.
+This project, **DeepStock AI**, focuses on forecasting stock prices using both traditional and deep learning methods — including **ARIMA**, **Dense (MLP)**, and **Bidirectional LSTM** models. The system evaluates performance based on multiple statistical and deep learning techniques to find the most effective predictor.
 
 ---
 
-## 🚀 Project Roadmap
+## 📊 Project Overview
 
-### 1. Data Collection
-- Historical stock data (1990–2022)
-- Features: `Open, High, Low, Close, Volume`
-- Optional: Sentiment/Fundamental data
+The goal of **DeepStock AI** is to build a reliable forecasting pipeline that:
 
----
-
-### 2. Data Preprocessing
-- **Normalization (Min–Max Scaling):**  
-  \[
-  a^{scaled}_m = \frac{a^i_m - a_{min}}{a_{max} - a_{min}}
-  \]
-
-- **Anti-normalization (inverse scaling):**  
-  \[
-  \hat{y_t} = y^{scaled}_t \cdot (y_{max} - y_{min}) + y_{min}
-  \]
-
-- **Feature Selection (Correlation):**  
-  \[
-  Corr(i) = \frac{cov(a_i, b)}{\sqrt{var(a_i) \cdot var(b)}}
-  \]
+* Uses **log-returns** instead of raw prices for stationarity.
+* Compares **traditional statistical (ARIMA)** and **deep learning (Dense & LSTM)** models.
+* Produces a **side-by-side performance table** (RMSE, MAE, R²).
+* Visualizes **training losses, predictions, and rolling statistics**.
+* Saves all preprocessing steps (scaler, model weights, comparison CSV).
 
 ---
 
-### 3. Feature Engineering (Technical Indicators)
-- **SMA:**  
-  \[
-  SMA(t,N) = \frac{1}{N}\sum_{k=1}^N CP(t-k)
-  \]
+## 🧩 Model Architectures
 
-- **EMA:**  
-  \[
-  EMA(t,\Delta) = (CP(t) - EMA(t-1))\cdot\Gamma + EMA(t-1)
-  \]
+### 🔹 1. ARIMA Model (Statistical Baseline)
 
-- **MACD:**  
-  \[
-  MACD = EMA(t,k) - EMA(t,d)
-  \]
+* Captures linear temporal dependencies.
+* Trained on **log-return** values.
+* Provides a benchmark for comparison against deep learning models.
 
-- **OBV:**  
-  \[
-  OBV = OBV_{pr} \pm Volume
-  \]
+### 🔹 2. Dense (MLP) Model
 
-- **RSI:**  
-  \[
-  RSI = 100 \cdot \frac{1}{1+RS(t)}
-  \]
+* Non-sequential neural network baseline.
+* Uses **flattened window inputs** from the time series.
+* Helps evaluate deep learning benefits over simple neural architectures.
+
+### 🔹 3. Bidirectional LSTM Model
+
+* Sequence-based deep learning model.
+* Learns temporal dependencies in both forward and backward directions.
+* Captures long-term trends in stock data efficiently.
 
 ---
 
-### 4. Model Building (ML + AI)
-- **Neural Network (Perceptron):**  
-  \[
-  Z = W^T X + b
-  \]
+## ⚙️ Installation
 
-- **RNN / LSTM:**  
-  \[
-  M_t = \tanh(W[STM_{t-1},E_t] + b)
-  \]
+To set up and run this project locally:
 
-- **Autoencoder:**  
-  \[
-  E(X,X') = ||X - X'||^2
-  \]
+```bash
+# Clone the repository
+git clone https://github.com/<your-username>/DeepStock-AI.git
 
-- **RBM (Restricted Boltzmann Machine):**  
-  \[
-  G(X,Y) = -\alpha^T X - \beta^T Y - X^T W Y
-  \]
+# Navigate to the project folder
+cd DeepStock-AI
 
-- **Extreme Learning Machine (ELM):**  
-  \[
-  Y_j = \sum_{i=1}^d \eta_i f(W_i X_j + e_i)
-  \]
+# (Optional) Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # For Linux/macOS
+venv\Scripts\activate     # For Windows
 
-- **Radial Basis Function Network (RBF):**  
-  \[
-  y(x) = \sum_{i=1}^N \mu_i \nu(\|x-x_i\|)
-  \]
-
----
-
-### 5. Training
-- Input: Technical Indicators + Normalized Features  
-- Output: Predicted Stock Price / Trend  
-- Optimization via Backpropagation + Gradient Descent
-
----
-
-### 6. Evaluation
-- **MSE:**  
-  \[
-  MSE = \frac{1}{n}\sum_{k=1}^n(y_k - \hat{y}_k)^2
-  \]
-
-- **RMSE:**  
-  \[
-  RMSE = \sqrt{\frac{1}{N}\sum_{t=1}^N(\hat{y}_t-y_t)^2}
-  \]
-
-- **MAPE:**  
-  \[
-  MAPE = \frac{1}{N}\sum_{t=1}^N \frac{|y_t-\hat{y}_t|}{y_t}
-  \]
-
-- **Directional Accuracy (DA):**  
-  \[
-  DA = \frac{1}{N}\sum_{t=1}^N D_t
-  \]
-
----
-
-## 📂 Project Structure
-
+# Install required dependencies
+pip install -r requirements.txt
 ```
 
-Deepstock-ML/
-│── data/
-│   ├── raw/            # raw stock datasets
-│   ├── processed/      # cleaned/normalized data
-│   └── external/       # extra data (sentiment, fundamentals)
-│
-│── notebooks/
-│   ├── EDA.ipynb       # exploratory data analysis
-│   ├── Indicators.ipynb# technical indicators
-│   └── Models.ipynb    # experiments with ML/AI models
-│
-│── src/
-│   ├── preprocessing/  # normalization, feature engineering, selection
-│   ├── models/         # NN, LSTM, Autoencoder, RBM, ELM, RBF
-│   ├── training/       # training pipeline & optimizers
-│   ├── evaluation/     # metrics & visualization
-│   └── utils/          # helpers, config
-│
-│── results/
-│   ├── models/         # saved trained models
-│   ├── predictions/    # prediction outputs
-│   └── logs/           # training logs
-│
-│── requirements.txt
-│── README.md
-│── main.py
+---
 
-````
+## 🧾 Dataset
+
+The project uses a CSV file named **`indexStock_Funal.csv`**, which contains the historical stock price data.
+
+| Column | Description    |
+| ------ | -------------- |
+| Date   | Trading date   |
+| Open   | Opening price  |
+| High   | Highest price  |
+| Low    | Lowest price   |
+| Close  | Closing price  |
+| Volume | Trading volume |
 
 ---
 
-## ⚙️ Usage
+## 🚀 Usage
 
-1. Place your dataset in `data/raw/` (CSV format).
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-````
+### 1️⃣ Open the Notebook
 
-3. Run the training pipeline:
+Run the Jupyter Notebook file:
 
-   ```bash
-   python -m src.training.train_pipeline
-   ```
-4. Results (predictions, models, plots) will be saved in `results/`.
-
----
-
-## 📊 Evaluation Metrics
-
-* Mean Squared Error (MSE)
-* Root Mean Squared Error (RMSE)
-* Mean Absolute Percentage Error (MAPE)
-* Directional Accuracy (DA)
-
----
-
-## 🔮 Future Improvements
-
-* Add sentiment analysis from news/Twitter
-* Implement advanced feature selection (PCA, mutual info)
-* Ensemble multiple models (LSTM + ELM + RBF)
-* Deploy via Flask/FastAPI for live predictions
-
----
-
-## ✍️ Author
-
-Developed by **Rayhan Kabir Dodi** for academic and research purposes.
-
+```bash
+jupyter notebook DeepStock_AI_Model.ipynb
 ```
+
+### 2️⃣ Steps inside the notebook
+
+* Load and visualize the dataset.
+* Compute log-returns and analyze rolling statistics.
+* Train ARIMA, Dense, and LSTM models.
+* Generate evaluation metrics and comparison CSV.
+* Visualize:
+
+  * Series plots
+  * Rolling mean & standard deviation
+  * Training loss
+  * Actual vs. Predicted (Full + Zoomed view)
+
+---
+
+## 📈 Results & Performance Summary
+
+| Model       | RMSE           | MAE            | R²             |
+| ----------- | -------------- | -------------- | -------------- |
+| ARIMA       | *to be filled* | *to be filled* | *to be filled* |
+| Dense (MLP) | *to be filled* | *to be filled* | *to be filled* |
+| LSTM        | *to be filled* | *to be filled* | *to be filled* |
+
+📌 *You can update this table after running the final notebook.*
+
+### Example Outputs
+
+* **Training Loss Curve**
+* **Predicted vs. Actual Graphs (Full & Zoomed)**
+* **Rolling Stats Visualization**
+
+---
+
+## 💾 Saved Artifacts
+
+All key artifacts are saved for reproducibility:
+
+* `scaler.pkl` → Data normalization
+* `arima_model.pkl` → Fitted ARIMA model
+* `dense_model.h5` → Trained Dense model
+* `lstm_model.h5` → Trained Bidirectional LSTM model
+* `comparison_results.csv` → Evaluation summary
+
+---
+
+## 🧠 Technologies Used
+
+* **Python**
+* **TensorFlow / Keras**
+* **Statsmodels**
+* **NumPy, Pandas, Matplotlib, Seaborn**
+* **Scikit-learn**
+
+---
+
+## 📚 Future Improvements
+
+* Add GRU and Transformer-based models for deeper comparisons
+* Include feature engineering using technical indicators
+* Build a Flask dashboard for live stock forecasting
+
+---
+
+## 🧑‍💻 Author
+
+**Rayhan Kabir Dodi**
+💼 Research-based AI enthusiast focused on time-series forecasting and deep learning applications.
+📫 Feel free to connect on GitHub or LinkedIn.
+
+---
+
+## 🪪 License
+
+This project is open-source under the **MIT License**.
+Feel free to use, modify, and share it for research or educational purposes.
 
