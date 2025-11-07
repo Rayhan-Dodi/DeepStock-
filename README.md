@@ -104,9 +104,9 @@ jupyter notebook DeepStock_AI_Model.ipynb
 
 | Model       | RMSE           | MAE            | R²             |
 | ----------- | -------------- | -------------- | -------------- |
-| ARIMA       | *to be filled* | *to be filled* | *to be filled* |
-| Dense (MLP) | *to be filled* | *to be filled* | *to be filled* |
-| LSTM        | *to be filled* | *to be filled* | *to be filled* |
+| ARIMA       | *8810.57* | *6392.54* | *-0.9746* |
+| Dense (MLP) | *7196.58* | *6015.29* | *-0.3174* |
+| LSTM        | *6070.28* | *5087.57* | *0.0627* |
 
 📌 *You can update this table after running the final notebook.*
 
