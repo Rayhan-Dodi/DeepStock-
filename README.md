@@ -44,7 +44,7 @@ To set up and run this project locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/DeepStock-AI.git
+git clone https://github.com/Rayhan-Dodi/DeepStock-
 
 # Navigate to the project folder
 cd DeepStock-AI
